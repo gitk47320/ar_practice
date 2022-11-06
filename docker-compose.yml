@@ -1,0 +1,20 @@
+version: "3.9"
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data
+  web:
+    build: .
+    volumes:
+      - .:/myapp
+    ports:
+      - "3000:3000"
+    stdin_open: true # サービス コンテナに標準入力を割り当てて実行するよう設定(https://docs.docker.jp/compose/compose-file/index.html#stdin-open)。
+    depends_on:
+      - db
+volumes:
+  postgres_volume:
+
